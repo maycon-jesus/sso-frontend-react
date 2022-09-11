@@ -22,6 +22,7 @@ import { useState } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { AnimatePresence, motion } from "framer-motion";
+import { TextInput } from "components/form/TextInput";
 
 interface Props {
   className?: string;
@@ -134,75 +135,40 @@ export function CardRegister(props: Props) {
         <Flex marginTop={4} padding="2" gap="4" flexDirection="column">
           <Flex width="100%" gap="inherit">
             <Box width="50%">
-              <FormControl
-                isInvalid={
-                  formik.touched.firstName && Boolean(formik.errors.firstName)
-                }
+              <TextInput
+                formik={formik}
+                formikKey="firstName"
+                label="Nome"
+                autoComplete="given-name"
+                placeHolder="Maycon"
                 isRequired
-              >
-                <FormLabel>Nome</FormLabel>
-                <Input
-                  name="firstName"
-                  autoComplete="given-name"
-                  placeholder="Maycon"
-                  variant="filled"
-                  value={formik.values.firstName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <AnimatePresence mode="popLayout">
-                  <motion.div
-                    key={formik.errors.firstName}
-                    initial={{ opacity: 0, translateY: "-100%", height: 0 }}
-                    animate={{ opacity: 1, translateY: "0%", height: "auto" }}
-                  >
-                    {formik.errors.firstName && (
-                      <FormErrorMessage>
-                        {formik.errors.firstName}
-                      </FormErrorMessage>
-                    )}
-                  </motion.div>
-                </AnimatePresence>
-              </FormControl>
+              ></TextInput>
             </Box>
             <Box width="50%">
-              <FormControl
-                isInvalid={formik.touched.lastName && !!formik.errors.lastName}
-              >
-                <FormLabel>Sobrenome</FormLabel>
-                <Input
-                  placeholder="Jesus"
-                  autoComplete="family-name"
-                  name="lastName"
-                  variant="filled"
-                  value={formik.values.lastName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <FormErrorMessage>{formik.errors.lastName}</FormErrorMessage>
-              </FormControl>
+              <TextInput
+                formik={formik}
+                formikKey="lastName"
+                label="Sobrenome"
+                autoComplete="family-name"
+                placeHolder="Jesus"
+                isRequired
+              ></TextInput>
             </Box>
           </Flex>
           <Box width="100%">
-            <FormControl
-              isInvalid={formik.touched.email && !!formik.errors.email}
-            >
-              <FormLabel>Email</FormLabel>
-              <Input
-                placeholder="teste@teste.xyz"
-                autoComplete="email"
-                name="email"
-                variant="filled"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-            </FormControl>
+            <TextInput
+              formik={formik}
+              formikKey="email"
+              label="Email"
+              autoComplete="email"
+              placeHolder="teste@teste.xyz"
+              isRequired
+            ></TextInput>
           </Box>
           <Box width="100%">
             <FormControl
               isInvalid={formik.touched.password && !!formik.errors.password}
+              isRequired
             >
               <FormLabel>Senha</FormLabel>
               <PasswordInput
@@ -221,6 +187,7 @@ export function CardRegister(props: Props) {
                 formik.touched.passwordConfirm &&
                 !!formik.errors.passwordConfirm
               }
+              isRequired
             >
               <FormLabel>Repita sua senha</FormLabel>
               <PasswordInput

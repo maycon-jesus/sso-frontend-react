@@ -31,7 +31,7 @@ export function LoggedAreaLayout(props: Props): JSX.Element {
           <Header></Header>
           <main
             style={{
-              minHeight: "100vh",
+              minHeight: "calc(100vh - 53px)",
             }}
           >
             {props.children}
