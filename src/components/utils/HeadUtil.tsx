@@ -14,7 +14,7 @@ export function HeadUtil(props: Props) {
       <meta property="og:url" content="https://sso.mayconjesus.dev" />
       <meta
         property="og:image"
-        content="https://sso-frontend-l527or7hl-maycon.vercel.app/assets/images/logo/og-image.png"
+        content="https://sso.mayconjesus.dev/assets/images/logo/og-image.png"
       />
       <meta
         property="og:description"
