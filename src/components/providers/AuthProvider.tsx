@@ -9,24 +9,32 @@ import { useAuthLogout } from "states/hooks/auth/useAuthLogout";
 export function AuthProvider() {
   const tokenState = useRecoilValue(useAuthTokenState);
   const getAuthUserData = useGetAuthUserData();
-  const doLogout = useAuthLogout()
+  const doLogout = useAuthLogout();
   const setLogged = useSetRecoilState(useAuthLoggedState);
   const token = tokenState || cookie.get("AUTH_TOKEN");
 
-  if (token) {
-    setApiToken(token);
-    getAuthUserData()
-      .then(() => {
-        setLogged(true);
-      })
-      .catch(() => {
-        doLogout()
-      });
-  }
-
   useEffect(() => {
-    if (!tokenState) return;
-    cookie.set("AUTH_TOKEN", tokenState);
+    if (token) {
+      setLogged({
+        loading: true,
+        logged: false,
+      });
+      setApiToken(token);
+      getAuthUserData()
+        .then(() => {
+          setLogged({
+            logged: true,
+            loading: false,
+          });
+        })
+        .catch(() => {
+          doLogout();
+        });
+    }
+
+    if (tokenState) {
+      cookie.set("AUTH_TOKEN", tokenState);
+    }
   }, [tokenState]);
 
   return <></>;
