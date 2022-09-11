@@ -5,14 +5,17 @@ import {
   InputRightElement,
   useColorMode,
 } from "@chakra-ui/react";
+import { useFormik } from "formik";
 import { ChangeEventHandler, FocusEventHandler, useState } from "react";
+import { TextInput } from "./TextInput";
 
 interface Props {
-  onChange?: ChangeEventHandler<HTMLInputElement>;
-  onBlur?: FocusEventHandler<HTMLInputElement>;
-  value?: string;
+  formik: ReturnType<typeof useFormik<any>>;
+  formikKey: string;
+  label?: string;
   autoComplete?: string;
-  name?: string;
+  placeHolder?: string;
+  isRequired?: boolean;
 }
 
 export function PasswordInput(props: Props) {
@@ -24,29 +27,21 @@ export function PasswordInput(props: Props) {
   };
 
   return (
-    <InputGroup>
-      <Input
-        pr="6rem"
-        type={show ? "text" : "password"}
-        placeholder="Senha"
-        variant="filled"
-        name={props.name}
-        onChange={props.onChange}
-        onBlur={props.onBlur}
-        value={props.value || ""}
-        autoComplete={props.autoComplete}
-      />
-      <InputRightElement width="6rem">
-        <Button
-          h="1.75rem"
-          variant="solid"
-          colorScheme={colorMode === "light" ? "whiteAlpha" : "blackAlpha"}
-          size="sm"
-          onClick={handleClick}
-        >
-          {show ? "Ocultar" : "Mostrar"}
-        </Button>
-      </InputRightElement>
-    </InputGroup>
+    <TextInput
+      {...props}
+      slot_inputRightElement={
+        <InputRightElement width="6rem">
+          <Button
+            h="1.75rem"
+            variant="solid"
+            colorScheme={colorMode === "light" ? "whiteAlpha" : "blackAlpha"}
+            size="sm"
+            onClick={handleClick}
+          >
+            {show ? "Ocultar" : "Mostrar"}
+          </Button>
+        </InputRightElement>
+      }
+    ></TextInput>
   );
 }

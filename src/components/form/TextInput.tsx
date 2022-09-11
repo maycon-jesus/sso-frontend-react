@@ -3,6 +3,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  InputGroup,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { AnimatePresence, motion } from "framer-motion";
@@ -14,6 +15,7 @@ interface Props {
   autoComplete?: string;
   placeHolder?: string;
   isRequired?: boolean;
+  slot_inputRightElement?: React.ReactNode;
 }
 
 export function TextInput({
@@ -23,6 +25,7 @@ export function TextInput({
   autoComplete,
   placeHolder,
   isRequired,
+  slot_inputRightElement,
 }: Props) {
   return (
     <FormControl
@@ -30,15 +33,18 @@ export function TextInput({
       isRequired={isRequired}
     >
       <FormLabel>{label}</FormLabel>
-      <Input
-        name={formikKey}
-        autoComplete={autoComplete}
-        placeholder={placeHolder}
-        variant="filled"
-        value={formik.values.firstName}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-      />
+      <InputGroup>
+        <Input
+          name={formikKey}
+          autoComplete={autoComplete}
+          placeholder={placeHolder}
+          variant="filled"
+          value={formik.values.firstName}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        ></Input>
+        {slot_inputRightElement}
+      </InputGroup>
       <AnimatePresence mode="popLayout">
         <motion.div
           key={formik.errors[formikKey] as string}

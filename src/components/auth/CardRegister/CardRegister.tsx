@@ -67,7 +67,8 @@ export function CardRegister(props: Props) {
       password: yup.string().required("Informe uma senha"),
       passwordConfirm: yup
         .string()
-        .oneOf([yup.ref("password")], "As senhas não são iguais"),
+        .oneOf([yup.ref("password")], "As senhas não são iguais")
+        .required("Repita a sua senha"),
       agreeTerms: yup
         .bool()
         .oneOf([true], "Você precisa aceitar os Termos e Condições"),
@@ -166,41 +167,22 @@ export function CardRegister(props: Props) {
             ></TextInput>
           </Box>
           <Box width="100%">
-            <FormControl
-              isInvalid={formik.touched.password && !!formik.errors.password}
+            <PasswordInput
+              formik={formik}
+              formikKey="password"
+              label="Senha"
+              autoComplete="new-password"
               isRequired
-            >
-              <FormLabel>Senha</FormLabel>
-              <PasswordInput
-                autoComplete="new-password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              ></PasswordInput>
-              <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
-            </FormControl>
+            ></PasswordInput>
           </Box>
           <Box width="100%">
-            <FormControl
-              isInvalid={
-                formik.touched.passwordConfirm &&
-                !!formik.errors.passwordConfirm
-              }
+            <PasswordInput
+              formik={formik}
+              formikKey="passwordConfirm"
+              label="Repita sua senha"
+              autoComplete="new-password"
               isRequired
-            >
-              <FormLabel>Repita sua senha</FormLabel>
-              <PasswordInput
-                autoComplete="new-password"
-                name="passwordConfirm"
-                value={formik.values.passwordConfirm}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              ></PasswordInput>
-              <FormErrorMessage>
-                {formik.errors.passwordConfirm}
-              </FormErrorMessage>
-            </FormControl>
+            ></PasswordInput>
           </Box>
           <Box width="100%">
             <FormControl
