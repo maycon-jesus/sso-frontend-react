@@ -20,6 +20,14 @@ const theme = {
       700: '#1cb089',
       800: '#199f7b',
       900: '#168d6d'
+    },
+    "normal-light":{
+      500: '#f5f5f5',
+      600: "#EBEBEB"
+    },
+    "normal-dark":{
+      200: "#262F40",
+      300: "#1F2633"
     }
   },
   components:{
@@ -33,6 +41,12 @@ const theme = {
         solid(props:any) {
           if(['blackAlpha','whiteAlpha'].includes(props.colorScheme)){
             return {
+              color: 'chakra-body-text'
+            }
+          }
+          if(props.colorScheme === 'normal'){
+            return {
+              bgColor: props.colorMode === 'light'? 'normal-light.500':'normal-dark.300',
               color: 'chakra-body-text'
             }
           }
@@ -54,6 +68,10 @@ const theme = {
       "chakra-header-divider":{
         _light:'#1A202C33',
         _dark:'#ecf0f133',
+      },
+      "text-secondary":{
+        _light: "#333",
+        _dark:"#ccc",
       },
       primary:{
         _dark:'primary.200',

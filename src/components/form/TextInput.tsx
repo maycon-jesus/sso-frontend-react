@@ -15,6 +15,7 @@ interface Props {
   autoComplete?: string;
   placeHolder?: string;
   isRequired?: boolean;
+  isDisabled?: boolean;
   slot_inputRightElement?: React.ReactNode;
 }
 
@@ -25,12 +26,14 @@ export function TextInput({
   autoComplete,
   placeHolder,
   isRequired,
+  isDisabled,
   slot_inputRightElement,
 }: Props) {
   return (
     <FormControl
       isInvalid={formik.touched[formikKey] && Boolean(formik.errors[formikKey])}
       isRequired={isRequired}
+      isDisabled={isDisabled}
     >
       <FormLabel>{label}</FormLabel>
       <InputGroup>
@@ -39,7 +42,7 @@ export function TextInput({
           autoComplete={autoComplete}
           placeholder={placeHolder}
           variant="filled"
-          value={formik.values.firstName}
+          value={formik.values[formikKey]}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         ></Input>
