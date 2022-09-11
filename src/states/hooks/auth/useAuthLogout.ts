@@ -10,7 +10,10 @@ export function useAuthLogout() {
 
   return () => {
     cookie.remove('AUTH_TOKEN')
-    setLogged(false)
+    setLogged({
+      loading:false,
+      logged:false
+    })
     setUserData(null)
     setToken(null)
   };

@@ -10,6 +10,7 @@ export function useGetAuthUserData() {
       $api
         .get("/users/me")
         .then((data) => {
+          data.data.avatarUrl = `https://www.gravatar.com/avatar/${data.data.avatarUrl}?s=32&d=identicon`
           setUserData(data.data);
           resolve(true);
         })

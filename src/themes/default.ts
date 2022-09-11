@@ -51,6 +51,10 @@ const theme = {
         _light:'#ecf0f1',
         _dark:'#1A202C'
       },
+      "chakra-header-divider":{
+        _light:'#1A202C33',
+        _dark:'#ecf0f133',
+      },
       primary:{
         _dark:'primary.200',
         _light:'primary.500'
@@ -59,14 +63,6 @@ const theme = {
         default:'#fff',
         _dark:'#262F40'
       },
-      // "background":{
-      //   _dark:"#121417",
-      //   _light:"#ddd"
-      // },
-      // "background2":{
-      //   _dark:"#060708",
-      //   _light:"#fff"
-      // },
     }
   }
 };
