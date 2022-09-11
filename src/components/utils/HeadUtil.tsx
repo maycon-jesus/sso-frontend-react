@@ -16,10 +16,13 @@ export function HeadUtil(props: Props) {
         property="og:image"
         content="https://sso.mayconjesus.dev/assets/images/logo/og-image.png"
       />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="627" />
       <meta
         property="og:description"
         content="Sistema de autenticação única para sites desenvolvidos por Maycon Jesus"
       ></meta>
+      <meta name="theme-color" content="#42E2B8"></meta>
     </Head>
   );
 }
