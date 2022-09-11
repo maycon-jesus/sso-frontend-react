@@ -21,6 +21,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
   className?: string;
@@ -149,7 +150,19 @@ export function CardRegister(props: Props) {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>
+                <AnimatePresence mode="popLayout">
+                  <motion.div
+                    key={formik.errors.firstName}
+                    initial={{ opacity: 0, translateY: "-100%", height: 0 }}
+                    animate={{ opacity: 1, translateY: "0%", height: "auto" }}
+                  >
+                    {formik.errors.firstName && (
+                      <FormErrorMessage>
+                        {formik.errors.firstName}
+                      </FormErrorMessage>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
               </FormControl>
             </Box>
             <Box width="50%">
