@@ -21,6 +21,7 @@ import { useSetRecoilState } from "recoil";
 import { useAuthTokenState } from "states/Auth";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { TextInput } from "components/form/TextInput";
 
 interface Props {
   className?: string;
@@ -103,39 +104,22 @@ export function CardLogin(props: Props) {
       <form onSubmit={formik.handleSubmit}>
         <Flex marginTop={4} padding="2" gap="4" flexDirection="column">
           <Box width="100%">
-            <FormControl
-              isInvalid={formik.touched.email && Boolean(formik.errors.email)}
+            <TextInput
+              formik={formik}
+              formikKey="email"
+              label="Email"
+              autoComplete="email"
               isRequired
-            >
-              <Input
-                placeholder="Email"
-                variant="filled"
-                value={formik.values.email}
-                autoComplete="email"
-                name="email"
-                required
-                onChange={formik.handleChange}
-                onBlur={() => formik.setFieldTouched("email")}
-              />
-              <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-            </FormControl>
+            ></TextInput>
           </Box>
           <Box width="100%">
-            <FormControl
-              isInvalid={
-                formik.touched.password && Boolean(formik.errors.password)
-              }
+            <PasswordInput
+              formik={formik}
+              formikKey="password"
+              label="Senha"
+              autoComplete="password"
               isRequired
-            >
-              <PasswordInput
-                autoComplete="password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={() => formik.setFieldTouched("password")}
-              ></PasswordInput>
-              <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
-            </FormControl>
+            ></PasswordInput>
           </Box>
           <Box width="100%">
             <Text>

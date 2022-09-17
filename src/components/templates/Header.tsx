@@ -49,12 +49,7 @@ export function Header() {
                   </Link>
                   <MenuDivider></MenuDivider>
                   <MenuItem as="div">
-                    <Button
-                      width="full"
-                      colorScheme="red"
-                      textColor="white"
-                      onClick={doLogout}
-                    >
+                    <Button width="full" colorScheme="red" onClick={doLogout}>
                       Sair da conta
                     </Button>
                   </MenuItem>
