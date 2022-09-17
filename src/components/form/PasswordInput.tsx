@@ -29,6 +29,7 @@ export function PasswordInput(props: Props) {
   return (
     <TextInput
       {...props}
+      type={show ? "text" : "password"}
       slot_inputRightElement={
         <InputRightElement width="6rem">
           <Button h="1.75rem" variant="solid" size="sm" onClick={handleClick}>

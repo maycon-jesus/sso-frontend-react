@@ -13,12 +13,10 @@ import {
   useToast,
   useBoolean,
 } from "@chakra-ui/react";
-import { mdiPencil } from "@mdi/js";
-import Icon from "@mdi/react";
 import { TextInput } from "components/form/TextInput";
 import { useFormik } from "formik";
 import { $api } from "libs/api";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { useAuthUserDataState } from "states/Auth";
 import { useGetAuthUserData } from "states/hooks/auth/useGetAuthUserData";
@@ -75,6 +73,11 @@ export default function ModalBasicUserDataEdit({
       formik.resetForm();
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    formik.initialValues.firstName = userData?.firstName;
+    formik.initialValues.lastName = userData?.lastName;
+  }, [userData]);
 
   return (
     <>

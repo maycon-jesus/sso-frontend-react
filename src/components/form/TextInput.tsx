@@ -17,6 +17,16 @@ interface Props {
   isRequired?: boolean;
   isDisabled?: boolean;
   slot_inputRightElement?: React.ReactNode;
+  type?: "text" | "password";
+  inputMode?:
+    | "none"
+    | "text"
+    | "decimal"
+    | "numeric"
+    | "tel"
+    | "search"
+    | "email"
+    | "url";
 }
 
 export function TextInput({
@@ -28,6 +38,8 @@ export function TextInput({
   isRequired,
   isDisabled,
   slot_inputRightElement,
+  inputMode = "text",
+  type = "text",
 }: Props) {
   return (
     <FormControl
@@ -38,10 +50,12 @@ export function TextInput({
       <FormLabel>{label}</FormLabel>
       <InputGroup>
         <Input
+          type={type}
           name={formikKey}
           autoComplete={autoComplete}
           placeholder={placeHolder}
           variant="filled"
+          inputMode={inputMode}
           value={formik.values[formikKey]}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
