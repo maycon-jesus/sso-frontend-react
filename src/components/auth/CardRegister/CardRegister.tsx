@@ -164,6 +164,7 @@ export function CardRegister(props: Props) {
               autoComplete="email"
               placeHolder="teste@teste.xyz"
               isRequired
+              inputMode="email"
             ></TextInput>
           </Box>
           <Box width="100%">
