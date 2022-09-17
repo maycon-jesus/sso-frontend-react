@@ -1,14 +1,18 @@
 import {
   extendTheme,
   Theme,
+  theme,
   withDefaultColorScheme,
 } from "@chakra-ui/react";
 
-const theme = {
+const customTheme = {
+  ...theme,
   config: {
+    ...theme.config,
     initialColorMode: "dark"
   },
   colors:{
+    ...theme.colors,
     "primary":{
       main:'#42E2B8',
       100: '#60e6c2',
@@ -21,54 +25,31 @@ const theme = {
       800: '#199f7b',
       900: '#168d6d'
     },
-    "normal-light":{
-      500: '#f5f5f5',
-      600: "#EBEBEB"
-    },
-    "normal-dark":{
-      200: "#262F40",
-      300: "#1F2633"
-    }
   },
   components:{
+    ...theme.components,
     Input:{
       defaultProps:{
         focusBorderColor:"primary.main",
       }
     },
-    Button:{
-      variants:{
-        solid(props:any) {
-          if(['blackAlpha','whiteAlpha'].includes(props.colorScheme)){
-            return {
-              color: 'chakra-body-text'
-            }
-          }
-          if(props.colorScheme === 'normal'){
-            return {
-              bgColor: props.colorMode === 'light'? 'normal-light.500':'normal-dark.300',
-              color: 'chakra-body-text'
-            }
-          }
-        },
-      }
-    },
     Checkbox:{
       defaultProps:{
-        borderColor: 'red'
+        borderColor: 'inherit'
       }
     }
   },
   semanticTokens:{
+    ...theme.semanticTokens,
     colors:{
       "chakra-body-bg":{
         _light:'#ecf0f1',
         _dark:'#1A202C'
       },
-      "chakra-header-divider":{
-        _light:'#1A202C33',
-        _dark:'#ecf0f133',
-      },
+      // "chakra-header-divider":{
+      //   _light:'#1A202C33',
+      //   _dark:'#ecf0f133',
+      // },
       "text-secondary":{
         _light: "#333",
         _dark:"#ccc",
@@ -79,15 +60,12 @@ const theme = {
       },
       "card-background":{
         default:'#fff',
-        _dark:'#262F40'
+        _dark:'#2D3748'
       },
     }
   }
 };
 
 export default extendTheme(
-  theme,
-  withDefaultColorScheme({
-    colorScheme:'primary'
-  })
+  customTheme
 );

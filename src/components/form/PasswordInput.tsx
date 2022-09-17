@@ -31,13 +31,7 @@ export function PasswordInput(props: Props) {
       {...props}
       slot_inputRightElement={
         <InputRightElement width="6rem">
-          <Button
-            h="1.75rem"
-            variant="solid"
-            colorScheme={colorMode === "light" ? "whiteAlpha" : "blackAlpha"}
-            size="sm"
-            onClick={handleClick}
-          >
+          <Button h="1.75rem" variant="solid" size="sm" onClick={handleClick}>
             {show ? "Ocultar" : "Mostrar"}
           </Button>
         </InputRightElement>
