@@ -7,6 +7,7 @@ interface Props {
   label: string;
   value: any;
   onClickBtnEdit?: MouseEventHandler<HTMLButtonElement>;
+  disableEdit?: boolean;
 }
 
 export default function InfoRow(props: Props) {
@@ -21,16 +22,18 @@ export default function InfoRow(props: Props) {
             {props.value}
           </Text>
         </Box>
-        <Box width="auto">
-          <Tooltip label="Editar" hasArrow placement="left">
-            <IconButton
-              icon={<Icon path={mdiPencil} size={1}></Icon>}
-              aria-label="Editar"
-              size="md"
-              onClick={props.onClickBtnEdit}
-            ></IconButton>
-          </Tooltip>
-        </Box>
+        {!props.disableEdit && (
+          <Box width="auto">
+            <Tooltip label="Editar" hasArrow placement="left">
+              <IconButton
+                icon={<Icon path={mdiPencil} size={1}></Icon>}
+                aria-label="Editar"
+                size="md"
+                onClick={props.onClickBtnEdit}
+              ></IconButton>
+            </Tooltip>
+          </Box>
+        )}
       </Flex>
     </Box>
   );
