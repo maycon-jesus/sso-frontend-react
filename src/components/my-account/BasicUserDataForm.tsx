@@ -47,6 +47,7 @@ export function BasicUserDataForm(props: Props) {
             value={userData?.lastName}
             onClickBtnEdit={modalBasicDisclosure.onOpen}
           ></InfoRow>
+          <InfoRow label="Email" value={userData?.email} disableEdit></InfoRow>
         </VStack>
       </Card>
     </>
