@@ -1,10 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import { AuthProvider } from "components/providers/AuthProvider";
 import { Header } from "components/templates/Header";
+import LoggedDrawer from "components/templates/LoggedDrawer";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useAuthLoggedState } from "states/Auth";
+import styles from "./LoggedArea.module.scss";
 
 interface Props {
   children: React.ReactNode;
@@ -29,13 +31,16 @@ export function LoggedAreaLayout(props: Props): JSX.Element {
       {logged.logged && isClient && (
         <Box>
           <Header></Header>
-          <main
-            style={{
-              minHeight: "calc(100vh - 53px)",
-            }}
-          >
-            {props.children}
-          </main>
+          <div className={styles["content-area"]}>
+            <LoggedDrawer></LoggedDrawer>
+            <main
+              style={{
+                minHeight: "calc(100vh - 53px)",
+              }}
+            >
+              {props.children}
+            </main>
+          </div>
         </Box>
       )}
     </div>

@@ -1,0 +1,9 @@
+.content-area{
+    position: relative;
+    display: flex;
+    flex-flow: row nowrap;
+
+    main{
+        flex-grow: 1;
+    }
+}

@@ -1,0 +1,12 @@
+.drawer-wrapper{
+    transition: all 0.3s;
+}
+
+.drawer-wrapper-open{
+    width: 260px;
+}
+
+.drawer {
+    background-color: var(--chakra-colors-card-background);
+    height: 100%;
+}

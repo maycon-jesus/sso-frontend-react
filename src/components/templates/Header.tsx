@@ -5,7 +5,6 @@ import {
   Flex,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuItem,
   MenuList,
   Text,
@@ -41,14 +40,7 @@ export function Header() {
                   />
                 </MenuButton>
                 <MenuList>
-                  <Link href="/minha-conta" passHref>
-                    <MenuItem as="a">Minha conta</MenuItem>
-                  </Link>
-                  <Link href="/developers" passHref>
-                    <MenuItem as="a">Área do desenvolvedor</MenuItem>
-                  </Link>
-                  <MenuDivider></MenuDivider>
-                  <MenuItem as="div">
+                  <MenuItem>
                     <Button width="full" colorScheme="red" onClick={doLogout}>
                       Sair da conta
                     </Button>
