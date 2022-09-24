@@ -4,13 +4,25 @@ import { RecoilRoot } from "recoil";
 import { ChakraProvider } from "@chakra-ui/react";
 import Theme from "themes/default";
 import { AuthProvider } from "components/providers/AuthProvider";
+import { NextPage } from "next";
+import { ReactElement, ReactNode } from "react";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export type NextPageCustom<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageCustom;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout || ((page) => page);
+
   return (
     <RecoilRoot>
       <AuthProvider />
       <ChakraProvider theme={Theme}>
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
       </ChakraProvider>
     </RecoilRoot>
   );
