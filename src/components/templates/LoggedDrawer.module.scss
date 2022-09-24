@@ -1,12 +1,46 @@
+$drawerWidth: 280px;
+
+.drawer-slide{
+    top: 53px !important;
+    height: calc(100vh - 53px) !important;
+    width: $drawerWidth !important;
+    z-index: 1 !important;
+}
+
 .drawer-wrapper{
-    transition: all 0.3s;
+    width: 0px;
+    transition: width var(--chakra-transition-duration-normal);
 }
 
 .drawer-wrapper-open{
-    width: 260px;
+    width: $drawerWidth;
 }
 
 .drawer {
     background-color: var(--chakra-colors-card-background);
     height: 100%;
+}
+
+.open-btn{
+    position: fixed;
+    top: 25px;
+    left: $drawerWidth;
+    z-index: 2;
+    background-color: var(--chakra-colors-card-background);
+    padding: 5px;
+    border-radius: 0 5px 5px 0;
+    
+}
+
+.accordion-item .accordion-button{
+    transition: 0.3s;
+}
+
+.accordion-item:has(div[aria-expanded="true"]){
+    background: var(--chakra-colors-chakra-body-bg);
+    border-radius: var(--chakra-radii-md);
+
+    .accordion-button{
+        padding: var(--chakra-space-2) var(--chakra-space-2) 0 var(--chakra-space-2);
+    }
 }

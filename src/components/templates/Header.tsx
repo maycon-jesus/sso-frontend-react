@@ -40,7 +40,7 @@ export function Header() {
                   />
                 </MenuButton>
                 <MenuList>
-                  <MenuItem>
+                  <MenuItem as="div">
                     <Button width="full" colorScheme="red" onClick={doLogout}>
                       Sair da conta
                     </Button>
