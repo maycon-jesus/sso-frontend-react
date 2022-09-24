@@ -4,7 +4,7 @@
 
 ### Ajustes e melhorias
 
-O projeto ainda está em desenvolvimento e as próximas atualizações estão no [Projeto](https://github.com/users/maycon-jesus/projects/7/views/5
+O projeto ainda está em desenvolvimento e as próximas atualizações estão no [Projeto](https://github.com/users/maycon-jesus/projects/7/views/5).
 
 ## 💻 Pré-requisitos
 
