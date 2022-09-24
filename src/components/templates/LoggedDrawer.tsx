@@ -9,38 +9,58 @@ import {
   Flex,
   Slide,
   Tooltip,
-  useDisclosure,
+  useBreakpointValue,
+  useOutsideClick,
   VStack,
 } from "@chakra-ui/react";
-import { mdiAccount, mdiApps, mdiMenu, mdiSecurity } from "@mdi/js";
+import {
+  mdiAccount,
+  mdiApps,
+  mdiBackburger,
+  mdiMenu,
+  mdiSecurity,
+} from "@mdi/js";
 import Icon from "@mdi/react";
 import Link from "next/link";
-import { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./LoggedDrawer.module.scss";
 import classnames from "classnames";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { useAuthUserDataState } from "states/Auth";
+import { useRecoilState } from "recoil";
 import { useDrawerOpenState } from "states/Drawer";
 
 export default function LoggedDrawer() {
   const [drawerOpen, setDrawerOpen] = useRecoilState(useDrawerOpenState);
-  const userData = useRecoilValue(useAuthUserDataState);
+  const refAside = useRef<any>();
+  const isMobile = useBreakpointValue(
+    {
+      base: true,
+      lg: false,
+    },
+    { ssr: false }
+  );
+
+  useOutsideClick({
+    ref: refAside as any,
+    enabled: isMobile,
+    handler: () => setDrawerOpen(false),
+  });
 
   useEffect(() => {
-    setDrawerOpen(true);
-  }, []);
+    setDrawerOpen(isMobile ? false : true);
+  }, [isMobile]);
 
   return (
     <div
       className={classnames({
         [styles["drawer-wrapper"]]: true,
-        [styles["drawer-wrapper-open"]]: drawerOpen,
+        [styles["drawer-wrapper-open"]]: drawerOpen && !isMobile,
       })}
     >
       <Slide
         className={styles["drawer-slide"]}
         direction="left"
         in={drawerOpen}
+        ref={refAside}
       >
         <Tooltip
           label={drawerOpen ? "Fechar menu" : "Abrir menu"}
@@ -51,7 +71,7 @@ export default function LoggedDrawer() {
             className={styles["open-btn"]}
             onClick={() => setDrawerOpen(!drawerOpen)}
           >
-            <Icon path={mdiMenu} size={1.2}></Icon>
+            <Icon path={drawerOpen ? mdiBackburger : mdiMenu} size={1.2}></Icon>
           </button>
         </Tooltip>
         <aside className={styles["drawer"]}>
