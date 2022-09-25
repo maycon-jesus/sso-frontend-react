@@ -14,17 +14,20 @@ const customTheme = {
   colors:{
     ...theme.colors,
     "primary":{
-      main:'#42E2B8',
-      100: '#60e6c2',
-      200: '#42E2B8',
-      300: '#3de1b5',
-      400: '#2bdeae',
-      500: '#21d4a4',
-      600: '#1ec296',
-      700: '#1cb089',
-      800: '#199f7b',
-      900: '#168d6d'
+      main:'#D72323',
+      100: '#e03e3e',
+      200: '#D72323',
+      300: '#d32222',
+      400: '#c11f1f',
+      500: '#af1d1d',
+      600: '#9e1a1a',
+      700: '#8c1717',
+      800: '#7b1414',
+      900: '#691111'
     },
+    "secondary":{
+      main: "#F56217"
+    }
   },
   components:{
     ...theme.components,
@@ -37,14 +40,38 @@ const customTheme = {
       defaultProps:{
         borderColor: 'inherit'
       }
+    },
+    Menu:{
+      baseStyle(){
+        return {
+          list:{
+            backgroundColor:'card-background'
+          },
+          // item:{
+          //   backgroundColor:'red'
+          // }
+        }
+      }
+    },
+    Modal:{
+      baseStyle(){
+        return {
+          dialog:{
+            backgroundColor:'card-background'
+          }
+        }
+      }
     }
+  },
+  shadows:{
+   outline: '0 0 0 2px var(--chakra-colors-secondary-main)'
   },
   semanticTokens:{
     ...theme.semanticTokens,
     colors:{
       "chakra-body-bg":{
         _light:'#ecf0f1',
-        _dark:'#1A202C'
+        _dark:'#060708'
       },
       // "chakra-header-divider":{
       //   _light:'#1A202C33',
@@ -60,7 +87,7 @@ const customTheme = {
       },
       "card-background":{
         default:'#fff',
-        _dark:'#2D3748'
+        _dark:'#121417'
       },
     }
   }

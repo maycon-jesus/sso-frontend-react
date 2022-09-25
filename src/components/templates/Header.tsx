@@ -7,6 +7,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Portal,
   Text,
   Wrap,
   WrapItem,
@@ -31,7 +32,7 @@ export function Header() {
           </Text>
           <Wrap ml="auto">
             <WrapItem>
-              <Menu>
+              <Menu isLazy>
                 <MenuButton>
                   <Avatar
                     size="sm"
@@ -39,13 +40,15 @@ export function Header() {
                     src={userData?.avatarUrl}
                   />
                 </MenuButton>
-                <MenuList>
-                  <MenuItem as="div">
-                    <Button width="full" colorScheme="red" onClick={doLogout}>
-                      Sair da conta
-                    </Button>
-                  </MenuItem>
-                </MenuList>
+                <Portal>
+                  <MenuList>
+                    <MenuItem as="div">
+                      <Button width="full" colorScheme="red" onClick={doLogout}>
+                        Sair da conta
+                      </Button>
+                    </MenuItem>
+                  </MenuList>
+                </Portal>
               </Menu>
             </WrapItem>
           </Wrap>

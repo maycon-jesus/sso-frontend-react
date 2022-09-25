@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import BtnColorModeChange from "components/BtnColorModeChange";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useRecoilValue } from "recoil";
@@ -19,6 +20,7 @@ export function AuthLayout(props: Props): JSX.Element {
   return (
     // background="background2"
     <Box>
+      <BtnColorModeChange></BtnColorModeChange>
       <main
         style={{
           minHeight: "100vh",

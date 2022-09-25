@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import BtnColorModeChange from "components/BtnColorModeChange";
 import { AuthProvider } from "components/providers/AuthProvider";
 import { Header } from "components/templates/Header";
 import LoggedDrawer from "components/templates/LoggedDrawer";
@@ -31,6 +32,8 @@ export function LoggedAreaLayout(props: Props): JSX.Element {
       {logged.logged && isClient && (
         <Box>
           <Header></Header>
+          <BtnColorModeChange></BtnColorModeChange>
+
           <div className={styles["content-area"]}>
             <LoggedDrawer></LoggedDrawer>
             <main
