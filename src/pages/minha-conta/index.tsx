@@ -1,5 +1,5 @@
 import { Avatar, Button, Container, Flex, Link } from "@chakra-ui/react";
-import { Title } from "components/templates/Title";
+import { Title } from "components/custom/Title";
 import { LoggedAreaLayout } from "layouts/LoggedArea";
 import { useRecoilValue } from "recoil";
 import { useAuthUserDataState } from "states/Auth";

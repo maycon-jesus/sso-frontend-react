@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { TextInput } from "components/form/TextInput";
-import { Card } from "components/templates/Card";
+import { Card } from "components/custom/card/Card";
 import { useFormik } from "formik";
 import { useRecoilValue } from "recoil";
 import { useAuthUserDataState } from "states/Auth";

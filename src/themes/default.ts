@@ -5,7 +5,7 @@ import {
   withDefaultColorScheme,
 } from "@chakra-ui/react";
 
-const customTheme = {
+const customTheme:Theme = {
   ...theme,
   config: {
     ...theme.config,
@@ -61,7 +61,7 @@ const customTheme = {
           }
         }
       }
-    }
+    },
   },
   shadows:{
    outline: '0 0 0 2px var(--chakra-colors-secondary-main)'
@@ -84,6 +84,10 @@ const customTheme = {
       primary:{
         _dark:'primary.200',
         _light:'primary.500'
+      },
+      "primary-text":{
+        _light: "white",
+        _dark: "white"
       },
       "card-background":{
         default:'#fff',
