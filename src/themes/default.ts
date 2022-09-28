@@ -5,7 +5,7 @@ import {
   withDefaultColorScheme,
 } from "@chakra-ui/react";
 
-const customTheme:Theme = {
+const customTheme = {
   ...theme,
   config: {
     ...theme.config,
@@ -34,6 +34,16 @@ const customTheme:Theme = {
     Input:{
       defaultProps:{
         focusBorderColor:"primary.main",
+      },
+      baseStyle(){
+        return {
+          field:{
+            _autofill:{
+            border: "1px solid var(--chakra-colors-chakra-body-bg)",
+            boxShadow: "0 0 0px 1000px var(--chakra-colors-chakra-body-bg) inset",
+          }
+          }
+        }
       }
     },
     Checkbox:{

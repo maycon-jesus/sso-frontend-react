@@ -81,7 +81,7 @@ export default function ModalCreateApplication(props: Props) {
               </Box>
             </Flex>
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter gap={2}>
             <Button variant="ghost" onClick={props.disclosure.onClose}>
               Cancelar
             </Button>

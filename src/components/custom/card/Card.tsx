@@ -8,6 +8,7 @@ interface Props {
   children?: React.ReactNode;
   title?: string;
   slot_title?: ReactNode;
+  slot_body?: ReactNode;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
@@ -22,6 +23,7 @@ export function Card(props: Props) {
     >
       {props.title && <CardTitle>{props.title}</CardTitle>}
       {props.slot_title && props.slot_title}
+      {props.slot_body && props.slot_body}
       {props.children && (
         <div className={styles["card-body"]}>{props.children}</div>
       )}
