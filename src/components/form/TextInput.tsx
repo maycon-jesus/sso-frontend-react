@@ -1,10 +1,11 @@
 import {
+  FilledInput,
   FormControl,
-  FormErrorMessage,
-  FormLabel,
+  FormHelperText,
   Input,
-  InputGroup,
-} from "@chakra-ui/react";
+  InputLabel,
+  TextField,
+} from "@mui/material";
 import { useFormik } from "formik";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -41,37 +42,38 @@ export function TextInput({
   inputMode = "text",
   type = "text",
 }: Props) {
+  const hasError =
+    formik.touched[formikKey] && Boolean(formik.errors[formikKey]);
+
   return (
-    <FormControl
-      isInvalid={formik.touched[formikKey] && Boolean(formik.errors[formikKey])}
-      isRequired={isRequired}
-      isDisabled={isDisabled}
-    >
-      <FormLabel>{label}</FormLabel>
-      <InputGroup>
-        <Input
-          type={type}
-          name={formikKey}
-          autoComplete={autoComplete}
-          placeholder={placeHolder}
-          variant="filled"
-          inputMode={inputMode}
-          value={formik.values[formikKey]}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        ></Input>
-        {slot_inputRightElement}
-      </InputGroup>
+    <FormControl fullWidth variant="standard">
+      <InputLabel>{label}</InputLabel>
+      <Input
+        value={formik.values[formikKey]}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        type={type}
+        inputMode={inputMode}
+        autoComplete={autoComplete}
+        placeholder={placeHolder}
+        required={isRequired}
+        disabled={isDisabled}
+        name={formikKey}
+        error={hasError}
+        endAdornment={slot_inputRightElement}
+      />
+
       <AnimatePresence mode="popLayout">
         <motion.div
           key={formik.errors[formikKey] as string}
-          initial={{ opacity: 0, translateY: "-100%", height: 0 }}
-          animate={{ opacity: 1, translateY: "0%", height: "auto" }}
+          initial={{ opacity: 0, translateY: "-100%" }}
+          animate={{ opacity: 1, translateY: "0%" }}
+          exit={{ opacity: 0, translateY: "100%" }}
         >
-          {formik.errors[formikKey] && (
-            <FormErrorMessage>
+          {hasError && (
+            <FormHelperText error={hasError}>
               {formik.errors[formikKey] as string}
-            </FormErrorMessage>
+            </FormHelperText>
           )}
         </motion.div>
       </AnimatePresence>

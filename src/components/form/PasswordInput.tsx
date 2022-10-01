@@ -1,14 +1,10 @@
-import {
-  Button,
-  Input,
-  InputGroup,
-  InputRightElement,
-  useColorMode,
-} from "@chakra-ui/react";
+import { mdiEyeOff } from "@mdi/js";
+import { IconButton, InputAdornment, SvgIcon, Tooltip } from "@mui/material";
 import { useFormik } from "formik";
 import { ChangeEventHandler, FocusEventHandler, useState } from "react";
 import { TextInput } from "./TextInput";
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 interface Props {
   formik: ReturnType<typeof useFormik<any>>;
   formikKey: string;
@@ -20,7 +16,6 @@ interface Props {
 
 export function PasswordInput(props: Props) {
   const [show, setShow] = useState(false);
-  const { colorMode } = useColorMode();
 
   const handleClick = () => {
     setShow(!show);
@@ -31,11 +26,16 @@ export function PasswordInput(props: Props) {
       {...props}
       type={show ? "text" : "password"}
       slot_inputRightElement={
-        <InputRightElement width="6rem">
-          <Button h="1.75rem" variant="solid" size="sm" onClick={handleClick}>
-            {show ? "Ocultar" : "Mostrar"}
-          </Button>
-        </InputRightElement>
+        <InputAdornment position="end">
+          <Tooltip title={show ? "Ocultar senha" : "Mostrar senha"} arrow>
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={handleClick}
+            >
+              {show ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            </IconButton>
+          </Tooltip>
+        </InputAdornment>
       }
     ></TextInput>
   );
