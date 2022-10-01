@@ -1,10 +1,7 @@
-import { Box, ThemeProvider, useTheme } from "@mui/material";
 import BtnColorModeChange from "components/BtnColorModeChange";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { useAuthLoggedState } from "states/Auth";
-import theme from "styles/themes/main";
 
 interface Props {
   children: React.ReactNode;
@@ -13,8 +10,7 @@ interface Props {
 export function AuthLayout(props: Props): JSX.Element {
   const router = useRouter();
   const logged = useRecoilValue(useAuthLoggedState);
-  const themee = useTheme();
-  console.log(themee);
+  console.log("layout render");
   if (!logged.loading && logged.logged) {
     router.push("/minha-conta");
   }

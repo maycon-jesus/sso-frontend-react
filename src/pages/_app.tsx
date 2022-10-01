@@ -6,9 +6,9 @@ import { RecoilRoot } from "recoil";
 import { AuthProvider } from "components/providers/AuthProvider";
 import { NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
-import { Box, CssBaseline, ThemeProvider, useTheme } from "@mui/material";
-import theme from "styles/themes/main";
-import { ToastContainer } from "react-toastify";
+import { CssBaseline } from "@mui/material";
+import ThemeProviderCustom from "components/providers/ThemeProvider";
+
 export type NextPageCustom<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -20,15 +20,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout || ((page) => page);
   return (
     <RecoilRoot>
-      <ThemeProvider theme={theme}>
+      <ThemeProviderCustom>
         <CssBaseline />
-        <ToastContainer
-          theme={theme.palette.mode}
-          position="top-right"
-        ></ToastContainer>
         <AuthProvider />
         {getLayout(<Component {...pageProps} />)}
-      </ThemeProvider>
+      </ThemeProviderCustom>
     </RecoilRoot>
   );
 }

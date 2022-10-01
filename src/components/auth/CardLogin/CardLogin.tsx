@@ -28,7 +28,7 @@ export function CardLogin(props: Props) {
   // Hooks
   const router = useRouter();
   const theme = useTheme();
-  theme.palette.mode = "light";
+
   // Form
   const [loading, setLoading] = useState(false);
   const setToken = useSetRecoilState(useAuthTokenState);
