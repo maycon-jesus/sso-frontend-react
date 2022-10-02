@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Typography, Unstable_Grid2 } from "@mui/material";
 
 interface Props {
   title: string;
@@ -6,15 +6,10 @@ interface Props {
 
 export function Title(props: Props) {
   return (
-    <Flex
-      justifyContent="center"
-      alignItems="center"
-      paddingY="12"
-      paddingX="6"
-    >
-      <Text as="h1" fontSize="5xl">
+    <Unstable_Grid2 xs={12} paddingX={3} paddingY={6}>
+      <Typography variant="h2" align="center">
         {props.title}
-      </Text>
-    </Flex>
+      </Typography>
+    </Unstable_Grid2>
   );
 }
