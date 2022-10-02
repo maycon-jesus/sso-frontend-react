@@ -82,6 +82,10 @@ export default function LoggedDrawer() {
                 [styles["acordion"]]: true,
                 [styles["acordion-open"]]: developerOptionsOpen,
               })}
+              style={{
+                // @ts-ignore
+                "--open-border-color": theme.palette.divider,
+              }}
             >
               <ListItemButton
                 onClick={() => setDeveloperOptionsOpen(!developerOptionsOpen)}
