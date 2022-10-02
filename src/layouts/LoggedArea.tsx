@@ -41,14 +41,7 @@ export function LoggedAreaLayout(props: Props): JSX.Element {
             </Unstable_Grid2>
             <Unstable_Grid2 xs={12}>
               <div className={styles["content-area"]}>
-                aaa
-                {/* <main
-              style={{
-                minHeight: "calc(100vh - 53px)",
-              }}
-            >
-              {props.children}
-            </main> */}
+                <main>{props.children}</main>
               </div>
             </Unstable_Grid2>
           </Unstable_Grid2>
