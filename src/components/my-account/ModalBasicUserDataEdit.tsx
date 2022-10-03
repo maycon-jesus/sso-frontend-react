@@ -1,14 +1,12 @@
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Modal,
-  Typography,
   Unstable_Grid2,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import { TextInput } from "components/form/TextInput";
 import { useFormik } from "formik";
 import { $api } from "libs/api";
@@ -93,12 +91,21 @@ export default function ModalBasicUserDataEdit(props: Props) {
             </Unstable_Grid2>
           </DialogContent>
           <DialogActions>
-            <Button onClick={props.onClose} color="inherit">
+            <Button
+              onClick={props.onClose}
+              color="inherit"
+              disabled={formLoading}
+            >
               cancelar
             </Button>
-            <Button type="submit" variant="contained" color="success">
+            <LoadingButton
+              loading={formLoading}
+              type="submit"
+              variant="contained"
+              color="success"
+            >
               Salvar
-            </Button>
+            </LoadingButton>
           </DialogActions>
         </form>
       </Dialog>
