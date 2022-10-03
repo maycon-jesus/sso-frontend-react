@@ -4,6 +4,7 @@ import {
   FormHelperText,
   Input,
   InputLabel,
+  OutlinedInput,
   TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
@@ -28,6 +29,7 @@ interface Props {
     | "search"
     | "email"
     | "url";
+  variant?: "standard" | "outlined" | "filled";
 }
 
 export function TextInput({
@@ -41,14 +43,34 @@ export function TextInput({
   slot_inputRightElement,
   inputMode = "text",
   type = "text",
+  variant = "standard",
 }: Props) {
   const hasError =
     formik.touched[formikKey] && Boolean(formik.errors[formikKey]);
+  const id = "abc" + Math.random() * 999999999999;
 
+  const getInputComponent = () => {
+    switch (variant) {
+      case "standard": {
+        return Input;
+      }
+      case "outlined": {
+        return OutlinedInput;
+      }
+      case "filled": {
+        return FilledInput;
+      }
+    }
+  };
+  const InputEl = getInputComponent();
+  console.log(label);
   return (
-    <FormControl fullWidth variant="standard">
-      <InputLabel>{label}</InputLabel>
-      <Input
+    <FormControl fullWidth variant={variant}>
+      <InputLabel htmlFor={id} required={isRequired}>
+        {label}
+      </InputLabel>
+      <InputEl
+        id={id}
         value={formik.values[formikKey]}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
@@ -61,6 +83,7 @@ export function TextInput({
         name={formikKey}
         error={hasError}
         endAdornment={slot_inputRightElement}
+        label={label}
       />
 
       <AnimatePresence mode="popLayout">
