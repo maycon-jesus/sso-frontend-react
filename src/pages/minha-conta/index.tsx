@@ -15,7 +15,7 @@ const MinhaContaPage: NextPageCustom = () => {
       <HeadUtil title="Minha conta"></HeadUtil>
       <Unstable_Grid2 container>
         <Title title="Minha conta"></Title>
-        <Container maxWidth="lg">
+        <Container maxWidth="sm">
           <Unstable_Grid2 container justifyContent="center">
             {/* Avatar area */}
             <Unstable_Grid2

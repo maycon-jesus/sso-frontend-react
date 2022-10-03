@@ -1,40 +1,32 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Button,
-  Flex,
   Box,
-  useToast,
-  useBoolean,
-} from "@chakra-ui/react";
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Modal,
+  Typography,
+  Unstable_Grid2,
+} from "@mui/material";
 import { TextInput } from "components/form/TextInput";
 import { useFormik } from "formik";
 import { $api } from "libs/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { useAuthUserDataState } from "states/Auth";
 import { useGetAuthUserData } from "states/hooks/auth/useGetAuthUserData";
 
 interface Props {
-  disclosure: ReturnType<typeof useDisclosure>;
+  open: boolean;
+  onClose: () => void;
 }
 
-export default function ModalBasicUserDataEdit({
-  disclosure: { isOpen, onClose },
-}: Props) {
-  const [formLoading, setFormLoading] = useBoolean(false);
+export default function ModalBasicUserDataEdit(props: Props) {
+  const [formLoading, setFormLoading] = useState(false);
   const userData = useRecoilValue(useAuthUserDataState);
   const getAuthUserData = useGetAuthUserData();
-  const toast = useToast({
-    position: "top-right",
-    isClosable: true,
-  });
   const formik = useFormik({
     initialValues: {
       firstName: userData?.firstName,
@@ -46,33 +38,27 @@ export default function ModalBasicUserDataEdit({
   });
 
   const saveForm = (values: any) => {
-    setFormLoading.on();
+    setFormLoading(true);
     $api
       .patch("/users/me/basic", values)
       .then(async () => {
         await getAuthUserData();
-        toast({
-          title: "Informações alteradas com sucesso!",
-          status: "success",
-        });
-        onClose();
+        toast.success("Informações alteradas com sucesso!");
+        props.onClose();
       })
       .catch((err) => {
-        toast({
-          title: "Ocorreu um erro",
-          description: err.response?.data?.message || err.message,
-        });
+        toast.error(`[ERRO] ${err.response?.data?.message || err.message}`);
       })
       .finally(() => {
-        setFormLoading.off();
+        setFormLoading(false);
       });
   };
 
   useEffect(() => {
-    if (isOpen) {
+    if (props.open) {
       formik.resetForm();
     }
-  }, [isOpen]);
+  }, [props.open]);
 
   useEffect(() => {
     formik.initialValues.firstName = userData?.firstName;
@@ -81,53 +67,41 @@ export default function ModalBasicUserDataEdit({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Editar</ModalHeader>
-          <ModalCloseButton></ModalCloseButton>
-
-          <form onSubmit={formik.handleSubmit}>
-            <ModalBody>
-              <Flex wrap="wrap" gap={2}>
-                <Box width="100%">
-                  <TextInput
-                    formik={formik}
-                    formikKey="firstName"
-                    label="Nome"
-                    isRequired
-                    autoComplete="given-name"
-                  ></TextInput>
-                </Box>
-                <Box width="100%">
-                  <TextInput
-                    formik={formik}
-                    formikKey="lastName"
-                    label="Sobrenome"
-                    isRequired
-                    autoComplete="family-name"
-                  ></TextInput>
-                </Box>
-              </Flex>
-            </ModalBody>
-            <ModalFooter>
-              <Flex wrap="wrap" gap={2}>
-                <Button variant="ghost" onClick={onClose}>
-                  Cancelar
-                </Button>
-                <Button
-                  variant="solid"
-                  colorScheme="green"
-                  type="submit"
-                  isLoading={formLoading}
-                >
-                  Salvar
-                </Button>
-              </Flex>
-            </ModalFooter>
-          </form>
-        </ModalContent>
-      </Modal>
+      <Dialog open={props.open} onClose={props.onClose} keepMounted>
+        <DialogTitle>Editar</DialogTitle>
+        <form onSubmit={formik.handleSubmit}>
+          <DialogContent>
+            <Unstable_Grid2 container spacing={2}>
+              <Unstable_Grid2 xs={12} sm={6}>
+                <TextInput
+                  formik={formik}
+                  formikKey="firstName"
+                  label="Nome"
+                  isRequired
+                  autoComplete="given-name"
+                ></TextInput>
+              </Unstable_Grid2>
+              <Unstable_Grid2 xs={12} sm={6}>
+                <TextInput
+                  formik={formik}
+                  formikKey="lastName"
+                  label="Sobrenome"
+                  isRequired
+                  autoComplete="family-name"
+                ></TextInput>
+              </Unstable_Grid2>
+            </Unstable_Grid2>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={props.onClose} color="inherit">
+              cancelar
+            </Button>
+            <Button type="submit" variant="contained" color="success">
+              Salvar
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </>
   );
 }

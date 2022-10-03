@@ -8,6 +8,7 @@ import { NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
 import { CssBaseline } from "@mui/material";
 import ThemeProviderCustom from "components/providers/ThemeProvider";
+import ToastProvider from "components/providers/ToastProvider";
 
 export type NextPageCustom<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -23,6 +24,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <ThemeProviderCustom>
         <CssBaseline />
         <AuthProvider />
+        <ToastProvider />
         {getLayout(<Component {...pageProps} />)}
       </ThemeProviderCustom>
     </RecoilRoot>
