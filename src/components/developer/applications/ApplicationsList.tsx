@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Unstable_Grid2 } from "@mui/material";
 import { useRecoilValue } from "recoil";
 import { useApplicationsListState } from "states/Applications";
 import ApplicationCard from "./ApplicationCard";
@@ -7,12 +7,12 @@ export default function ApplicationsList() {
   const applications = useRecoilValue(useApplicationsListState);
 
   return (
-    <Flex width="full" wrap="wrap" gap={2} marginTop={6} boxSizing="border-box">
+    <Unstable_Grid2 container spacing={2}>
       {applications.map((app: any) => (
-        <Box width="calc(33.3% - (var(--chakra-space-2)/3*2))" key={app.id}>
+        <Unstable_Grid2 xs={12} md={6} lg={4} key={app.id}>
           <ApplicationCard application={app}></ApplicationCard>
-        </Box>
+        </Unstable_Grid2>
       ))}
-    </Flex>
+    </Unstable_Grid2>
   );
 }

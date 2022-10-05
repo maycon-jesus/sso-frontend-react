@@ -1,35 +1,27 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-  useToast,
-} from "@chakra-ui/react";
 import { TextInput } from "components/form/TextInput";
 import { useFormik } from "formik";
 import { $api } from "libs/api";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import * as yup from "yup";
+import { toast } from "react-toastify";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Unstable_Grid2,
+} from "@mui/material";
 
 interface Props {
-  disclosure: ReturnType<typeof useDisclosure>;
+  open: boolean;
+  onClose: () => void;
 }
 
 export default function ModalCreateApplication(props: Props) {
   const [formLoading, setFormLoading] = useState(false);
   const router = useRouter();
-  const toast = useToast({
-    isClosable: true,
-    position: "top-right",
-  });
 
   const formik = useFormik({
     initialValues: {
@@ -43,59 +35,42 @@ export default function ModalCreateApplication(props: Props) {
       $api
         .post("/users/me/applications", { name: values.name })
         .then((r) => {
-          toast({
-            status: "success",
-            title: "Aplicativo criado com sucesso!",
-          });
+          toast.success("Aplicativo criado com sucesso!");
           router.push("/desenvolvedor/aplicativos/" + r.data.id);
           formik.resetForm();
         })
         .catch((err) => {
-          toast({
-            status: "error",
-            title: "Erro",
-            description: err.response?.data?.message || err.message,
-          });
+          toast.error(`[ERRO] ${err.response?.data?.message || err.message}`);
           setFormLoading(false);
         });
     },
   });
 
   return (
-    <Modal isOpen={props.disclosure.isOpen} onClose={props.disclosure.onClose}>
-      <ModalOverlay></ModalOverlay>
-      <ModalContent>
-        <ModalHeader>Criar aplicativo</ModalHeader>
-        <ModalCloseButton></ModalCloseButton>
-
-        <form onSubmit={formik.handleSubmit}>
-          <ModalBody>
-            <Flex wrap="wrap">
-              <Box width="full">
-                <TextInput
-                  formik={formik}
-                  formikKey="name"
-                  label="Nome"
-                  isRequired
-                ></TextInput>
-              </Box>
-            </Flex>
-          </ModalBody>
-          <ModalFooter gap={2}>
-            <Button variant="ghost" onClick={props.disclosure.onClose}>
-              Cancelar
-            </Button>
-            <Button
-              variant="solid"
-              colorScheme="green"
-              type="submit"
-              isLoading={formLoading}
-            >
-              Criar
-            </Button>
-          </ModalFooter>
-        </form>
-      </ModalContent>
-    </Modal>
+    <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="xs">
+      <DialogTitle>Criar aplicativo</DialogTitle>
+      <form onSubmit={formik.handleSubmit}>
+        <DialogContent>
+          <Unstable_Grid2 container>
+            <Unstable_Grid2 xs={12}>
+              <TextInput
+                formik={formik}
+                formikKey="name"
+                label="Nome"
+                isRequired
+              ></TextInput>
+            </Unstable_Grid2>
+          </Unstable_Grid2>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={props.onClose} color="inherit">
+            Cancelar
+          </Button>
+          <Button color="success" type="submit" variant="contained">
+            Criar
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 }

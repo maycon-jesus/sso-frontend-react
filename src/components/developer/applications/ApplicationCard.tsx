@@ -1,9 +1,6 @@
-import { Text } from "@chakra-ui/react";
-import { Card } from "components/custom/card/Card";
-import CardTitle from "components/custom/card/CardTitle";
-import Link from "next/link";
+import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { MouseEvent, MouseEventHandler } from "react";
+import NextLink from "next/link";
 
 interface Props {
   application: any;
@@ -13,31 +10,20 @@ export default function ApplicationCard(props: Props) {
   const appLink = `/desenvolvedor/aplicativos/${props.application.id}`;
   const router = useRouter();
 
-  const clickLink = () => {
-    router.push(appLink);
-  };
   return (
-    <a
-      href={appLink}
-      onClick={(ev) => {
-        if (!ev.ctrlKey) {
-          ev.preventDefault();
-          clickLink();
-        }
-      }}
-    >
-      <Card
-        slot_title={
-          <CardTitle>
-            <Text as="span" color="text-secondary" fontSize="md">
-              #{props.application.id}
-            </Text>
-            <Text as="span" marginLeft="2">
+    <Card>
+      <NextLink href={appLink} passHref>
+        <CardActionArea>
+          <CardContent>
+            <Typography variant="h5" component="div">
+              <Typography variant="h6" component="span" color="secondary">
+                #{props.application.id}
+              </Typography>{" "}
               {props.application.name}
-            </Text>
-          </CardTitle>
-        }
-      ></Card>
-    </a>
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </NextLink>
+    </Card>
   );
 }
