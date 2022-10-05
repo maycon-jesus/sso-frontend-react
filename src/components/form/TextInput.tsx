@@ -1,10 +1,12 @@
 import {
+  FilledInput,
   FormControl,
-  FormErrorMessage,
-  FormLabel,
+  FormHelperText,
   Input,
-  InputGroup,
-} from "@chakra-ui/react";
+  InputLabel,
+  OutlinedInput,
+  TextField,
+} from "@mui/material";
 import { useFormik } from "formik";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -27,6 +29,7 @@ interface Props {
     | "search"
     | "email"
     | "url";
+  variant?: "standard" | "outlined" | "filled";
 }
 
 export function TextInput({
@@ -40,38 +43,60 @@ export function TextInput({
   slot_inputRightElement,
   inputMode = "text",
   type = "text",
+  variant = "standard",
 }: Props) {
+  const hasError =
+    formik.touched[formikKey] && Boolean(formik.errors[formikKey]);
+  const id = "abc" + Math.random() * 999999999999;
+
+  const getInputComponent = () => {
+    switch (variant) {
+      case "standard": {
+        return Input;
+      }
+      case "outlined": {
+        return OutlinedInput;
+      }
+      case "filled": {
+        return FilledInput;
+      }
+    }
+  };
+  const InputEl = getInputComponent();
+  console.log(label);
   return (
-    <FormControl
-      isInvalid={formik.touched[formikKey] && Boolean(formik.errors[formikKey])}
-      isRequired={isRequired}
-      isDisabled={isDisabled}
-    >
-      <FormLabel>{label}</FormLabel>
-      <InputGroup>
-        <Input
-          type={type}
-          name={formikKey}
-          autoComplete={autoComplete}
-          placeholder={placeHolder}
-          variant="filled"
-          inputMode={inputMode}
-          value={formik.values[formikKey]}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        ></Input>
-        {slot_inputRightElement}
-      </InputGroup>
+    <FormControl fullWidth variant={variant}>
+      <InputLabel htmlFor={id} required={isRequired}>
+        {label}
+      </InputLabel>
+      <InputEl
+        id={id}
+        value={formik.values[formikKey]}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        type={type}
+        inputMode={inputMode}
+        autoComplete={autoComplete}
+        placeholder={placeHolder}
+        required={isRequired}
+        disabled={isDisabled}
+        name={formikKey}
+        error={hasError}
+        endAdornment={slot_inputRightElement}
+        label={label}
+      />
+
       <AnimatePresence mode="popLayout">
         <motion.div
           key={formik.errors[formikKey] as string}
-          initial={{ opacity: 0, translateY: "-100%", height: 0 }}
-          animate={{ opacity: 1, translateY: "0%", height: "auto" }}
+          initial={{ opacity: 0, translateY: "-100%" }}
+          animate={{ opacity: 1, translateY: "0%" }}
+          exit={{ opacity: 0, translateY: "100%" }}
         >
-          {formik.errors[formikKey] && (
-            <FormErrorMessage>
+          {hasError && (
+            <FormHelperText error={hasError}>
               {formik.errors[formikKey] as string}
-            </FormErrorMessage>
+            </FormHelperText>
           )}
         </motion.div>
       </AnimatePresence>
