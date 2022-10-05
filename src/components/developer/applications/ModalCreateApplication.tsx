@@ -13,6 +13,7 @@ import {
   DialogTitle,
   Unstable_Grid2,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 interface Props {
   open: boolean;
@@ -63,12 +64,21 @@ export default function ModalCreateApplication(props: Props) {
           </Unstable_Grid2>
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.onClose} color="inherit">
+          <Button
+            onClick={props.onClose}
+            color="inherit"
+            disabled={formLoading}
+          >
             Cancelar
           </Button>
-          <Button color="success" type="submit" variant="contained">
+          <LoadingButton
+            loading={formLoading}
+            color="success"
+            type="submit"
+            variant="contained"
+          >
             Criar
-          </Button>
+          </LoadingButton>
         </DialogActions>
       </form>
     </Dialog>

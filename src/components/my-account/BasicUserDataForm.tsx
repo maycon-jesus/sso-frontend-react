@@ -1,4 +1,3 @@
-import { useDisclosure } from "@chakra-ui/react";
 import {
   Card,
   CardContent,
@@ -79,25 +78,6 @@ export function BasicUserDataForm(props: Props) {
           </List>
         </CardContent>
       </Card>
-      {/* <ModalBasicUserDataEdit
-        disclosure={modalBasicDisclosure}
-      ></ModalBasicUserDataEdit>
-
-      <Card title="Informações básicas" className={props.className}>
-        <VStack divider={<Divider></Divider>}>
-          <InfoRow
-            label="Nome"
-            value={userData?.firstName}
-            onClickBtnEdit={modalBasicDisclosure.onOpen}
-          ></InfoRow>
-          <InfoRow
-            label="Sobrenome"
-            value={userData?.lastName}
-            onClickBtnEdit={modalBasicDisclosure.onOpen}
-          ></InfoRow>
-          <InfoRow label="Email" value={userData?.email} disableEdit></InfoRow>
-        </VStack>
-      </Card> */}
     </>
   );
 }

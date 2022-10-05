@@ -1,26 +1,18 @@
 import {
   AppBar,
-  AppBarProps,
   Avatar,
   Button,
   IconButton,
-  ListItemIcon,
   Menu,
-  MenuItem,
-  Paper,
-  styled,
   Toolbar,
   Tooltip,
   Typography,
   Unstable_Grid2,
-  useTheme,
 } from "@mui/material";
-import Link from "next/link";
 import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useAuthUserDataState } from "states/Auth";
 import { useAuthLogout } from "states/hooks/auth/useAuthLogout";
-import styles from "./Header.module.scss";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDrawerOpenState } from "states/Drawer";
@@ -32,7 +24,6 @@ export function Header() {
   const [menuAccountAnchorEl, setMenuAccountAnchorEl] =
     useState<null | HTMLElement>(null);
   const menuAccountOpen = Boolean(menuAccountAnchorEl);
-  const theme = useTheme();
 
   const handleCloseMenuAccount = () => {
     setMenuAccountAnchorEl(null);

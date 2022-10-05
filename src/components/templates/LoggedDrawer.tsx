@@ -1,10 +1,9 @@
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./LoggedDrawer.module.scss";
 import { useRecoilState } from "recoil";
 import { useDrawerOpenState } from "states/Drawer";
 import {
-  Box,
   Collapse,
   Drawer,
   List,
@@ -14,7 +13,6 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import ListItem from "components/custom/list/ListItem";
 import classNames from "classnames";
 
 // Icons
@@ -57,26 +55,24 @@ export default function LoggedDrawer() {
           }}
         >
           <List>
-            <ListItem>
-              <Link href="/minha-conta" passHref>
-                <ListItemButton component="a">
-                  <ListItemIcon>
-                    <AccountCircleIcon />
-                  </ListItemIcon>
-                  Informações Pessoais
-                </ListItemButton>
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link href="/minha-conta/seguranca" passHref>
-                <ListItemButton component="a">
-                  <ListItemIcon>
-                    <SecurityIcon />
-                  </ListItemIcon>
-                  Segurança
-                </ListItemButton>
-              </Link>
-            </ListItem>
+            <Link href="/minha-conta" passHref>
+              <ListItemButton component="a">
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Informações Pessoais"></ListItemText>
+              </ListItemButton>
+            </Link>
+
+            <Link href="/minha-conta/seguranca" passHref>
+              <ListItemButton component="a">
+                <ListItemIcon>
+                  <SecurityIcon />
+                </ListItemIcon>
+                <ListItemText primary="Segurança"></ListItemText>
+              </ListItemButton>
+            </Link>
+
             <div
               className={classNames({
                 [styles["acordion"]]: true,

@@ -1,7 +1,6 @@
 import { FormControl } from "@chakra-ui/react";
-import { FormControlLabel, FormHelperText } from "@mui/material";
+import { FormControlLabel, FormGroup, FormHelperText } from "@mui/material";
 import { useFormik } from "formik";
-import { SyntheticEvent } from "react";
 import { Checkbox as CheckboxM } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -17,7 +16,7 @@ export default function Checkbox(props: Props) {
     Boolean(props.formik.errors[props.formikKey]);
 
   return (
-    <FormControl isRequired>
+    <FormGroup>
       <FormControlLabel
         name="agreeTerms"
         label={props.label}
@@ -41,6 +40,6 @@ export default function Checkbox(props: Props) {
           )}
         </motion.div>
       </AnimatePresence>
-    </FormControl>
+    </FormGroup>
   );
 }

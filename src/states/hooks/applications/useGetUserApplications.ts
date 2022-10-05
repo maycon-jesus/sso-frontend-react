@@ -1,14 +1,10 @@
 import { useApplicationsListState } from './../../Applications';
 import { useSetRecoilState } from "recoil";
 import { $api } from 'libs/api';
-import { useToast } from '@chakra-ui/react';
+import {toast} from "react-toastify"
 
 export function useGetUserApplications(){
     const setApplications = useSetRecoilState(useApplicationsListState)
-    const toast = useToast({
-        isClosable:true,
-        position:'top-right'
-    })
 
     return ()=>{
         return new Promise((resolve,reject)=>{
@@ -18,11 +14,7 @@ export function useGetUserApplications(){
                 resolve({})
             })
             .catch(err => {
-                toast({
-                    status:'error',
-                    title:'Erro',
-                    description:err.response?.data?.message||err.message
-                })
+                toast.error(`[ERRO] ${err.response?.data?.message||err.message}`)
                 reject(err)
             })
         })
