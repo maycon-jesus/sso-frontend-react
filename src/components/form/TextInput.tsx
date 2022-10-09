@@ -11,8 +11,8 @@ import { useFormik } from "formik";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
-  formik: ReturnType<typeof useFormik<any>>;
-  formikKey: string;
+  formik?: ReturnType<typeof useFormik<any>>;
+  formikKey?: string;
   label?: string;
   autoComplete?: string;
   placeHolder?: string;
@@ -30,6 +30,7 @@ interface Props {
     | "email"
     | "url";
   variant?: "standard" | "outlined" | "filled";
+  value?: string;
 }
 
 export function TextInput({
@@ -44,10 +45,11 @@ export function TextInput({
   inputMode = "text",
   type = "text",
   variant = "standard",
+  value,
 }: Props) {
-  const hasError =
-    formik.touched[formikKey] && Boolean(formik.errors[formikKey]);
-  const id = "abc" + Math.random() * 999999999999;
+  const hasError = Boolean(
+    formikKey && formik?.touched[formikKey] && formik.errors[formikKey]
+  );
 
   const getInputComponent = () => {
     switch (variant) {
@@ -66,14 +68,11 @@ export function TextInput({
   console.log(label);
   return (
     <FormControl fullWidth variant={variant}>
-      <InputLabel htmlFor={id} required={isRequired}>
-        {label}
-      </InputLabel>
+      <InputLabel required={isRequired}>{label}</InputLabel>
       <InputEl
-        id={id}
-        value={formik.values[formikKey]}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
+        value={formik && formikKey ? formik.values[formikKey] : value}
+        onChange={formik?.handleChange}
+        onBlur={formik?.handleBlur}
         type={type}
         inputMode={inputMode}
         autoComplete={autoComplete}
@@ -86,20 +85,22 @@ export function TextInput({
         label={label}
       />
 
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          key={formik.errors[formikKey] as string}
-          initial={{ opacity: 0, translateY: "-100%" }}
-          animate={{ opacity: 1, translateY: "0%" }}
-          exit={{ opacity: 0, translateY: "100%" }}
-        >
-          {hasError && (
-            <FormHelperText error={hasError}>
-              {formik.errors[formikKey] as string}
-            </FormHelperText>
-          )}
-        </motion.div>
-      </AnimatePresence>
+      {formik && formikKey && (
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={formik.errors[formikKey] as string}
+            initial={{ opacity: 0, translateY: "-100%" }}
+            animate={{ opacity: 1, translateY: "0%" }}
+            exit={{ opacity: 0, translateY: "100%" }}
+          >
+            {hasError && (
+              <FormHelperText error={hasError}>
+                {formik.errors[formikKey] as string}
+              </FormHelperText>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      )}
     </FormControl>
   );
 }
