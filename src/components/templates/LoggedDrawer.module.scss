@@ -1,46 +1,33 @@
 $drawerWidth: 280px;
 
-.drawer-slide{
-    top: 53px !important;
-    height: calc(100vh - 53px) !important;
-    width: $drawerWidth !important;
-    z-index: 1 !important;
-}
-
-.drawer-wrapper{
-    width: 0px;
-    transition: width var(--chakra-transition-duration-normal);
-}
-
-.drawer-wrapper-open{
+.drawerPaper {
     width: $drawerWidth;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
-.drawer {
-    background-color: var(--chakra-colors-card-background);
-    height: 100%;
-}
+.drawer-wrapper {
 
-.open-btn{
-    position: fixed;
-    top: 25px;
-    left: $drawerWidth;
-    z-index: 2;
-    background-color: var(--chakra-colors-card-background);
-    padding: 5px;
-    border-radius: 0 5px 5px 0;
-    
-}
-
-.accordion-item .accordion-button{
-    transition: 0.3s;
-}
-
-.accordion-item:has(div[aria-expanded="true"]){
-    background: var(--chakra-colors-chakra-body-bg);
-    border-radius: var(--chakra-radii-md);
-
-    .accordion-button{
-        padding: var(--chakra-space-2) var(--chakra-space-2) 0 var(--chakra-space-2);
+    .drawer {
+        width: $drawerWidth;
+        position: relative;
+        width: 0px;
+        transition: all 225ms ease;
+        z-index: 20;
     }
+
+    &.drawer-open {
+        .drawer {
+            width: $drawerWidth;
+        }
+    }
+}
+.acordion{
+    transition: all 250ms ease;
+}
+.acordion-open{
+    margin: 10px;
+    border: 1px solid var(--open-border-color);
+    border-radius: 10px;
+    overflow: hidden;
 }

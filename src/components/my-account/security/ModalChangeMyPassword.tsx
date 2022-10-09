@@ -1,33 +1,26 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-  useToast,
-} from "@chakra-ui/react";
 import { PasswordInput } from "components/form/PasswordInput";
 import { useFormik } from "formik";
 import { $api } from "libs/api";
 import { useState } from "react";
 import * as yup from "yup";
+import { toast } from "react-toastify";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Unstable_Grid2,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 interface Props {
-  disclosure: ReturnType<typeof useDisclosure>;
+  open: boolean;
+  onClose: () => void;
 }
 
 export default function ModalChangeMyPassword(props: Props) {
   const [formLoading, setFormLoading] = useState(false);
-  const toast = useToast({
-    isClosable: true,
-    position: "top-right",
-  });
   const formik = useFormik({
     initialValues: {
       oldPassword: "",
@@ -53,24 +46,22 @@ export default function ModalChangeMyPassword(props: Props) {
     },
   });
 
+  const handleClose = (ev?: any, reason?: any) => {
+    if (!reason || reason !== "backdropClick") props.onClose();
+    formik.resetForm();
+  };
+
   const changePassword = (oldPassword: string, newPassword: string) => {
     setFormLoading(true);
     $api
       .post("/users/me/security/password", { oldPassword, newPassword })
       .then(() => {
-        toast({
-          status: "success",
-          title: "Senha alterada",
-        });
-        props.disclosure.onClose();
+        toast.success("Senha alterada");
+        handleClose();
         formik.resetForm();
       })
       .catch((err) => {
-        toast({
-          status: "error",
-          title: "Erro",
-          description: err.response?.data?.message || err.message,
-        });
+        toast.error(`[ERRO] ${err.response?.data?.message || err.message}`);
       })
       .finally(() => {
         setFormLoading(false);
@@ -78,60 +69,57 @@ export default function ModalChangeMyPassword(props: Props) {
   };
 
   return (
-    <Modal isOpen={props.disclosure.isOpen} onClose={props.disclosure.onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Alterar senha</ModalHeader>
-        <ModalCloseButton></ModalCloseButton>
-        <form onSubmit={formik.handleSubmit}>
-          <ModalBody>
-            <Flex wrap="wrap" gap={2}>
-              <Box width="100%">
-                <PasswordInput
-                  formik={formik}
-                  formikKey="oldPassword"
-                  label="Senha atual"
-                  isRequired
-                  autoComplete="current-password"
-                ></PasswordInput>
-              </Box>
-              <Box width="100%">
-                <PasswordInput
-                  formik={formik}
-                  formikKey="newPassword"
-                  label="Senha nova"
-                  isRequired
-                  autoComplete="new-password"
-                ></PasswordInput>
-              </Box>
-              <Box width="100%">
-                <PasswordInput
-                  formik={formik}
-                  formikKey="confirmNewPassword"
-                  label="Digite novamente a nova senha"
-                  isRequired
-                  autoComplete="new-password"
-                ></PasswordInput>
-              </Box>
-            </Flex>
-          </ModalBody>
-          <ModalFooter>
-            <Flex wrap="wrap" gap={2}>
-              <Button variant="ghost" onClick={props.disclosure.onClose}>
-                Cancelar
-              </Button>
-              <Button
-                variant="solid"
-                colorScheme="green"
-                type="submit"
-                isLoading={formLoading}
-              >
-                Salvar
-              </Button>
-            </Flex>
-          </ModalFooter>
-        </form>
-      </ModalContent>
-    </Modal>
+    <Dialog open={props.open} onClose={handleClose} keepMounted>
+      <DialogTitle>Alterar senha</DialogTitle>
+      <form onSubmit={formik.handleSubmit}>
+        <DialogContent>
+          <Unstable_Grid2 container spacing={2}>
+            <Unstable_Grid2 xs={12}>
+              <PasswordInput
+                formik={formik}
+                formikKey="oldPassword"
+                label="Senha atual"
+                isRequired
+                autoComplete="current-password"
+                variant="outlined"
+              ></PasswordInput>
+            </Unstable_Grid2>
+            <Unstable_Grid2 xs={12}>
+              <PasswordInput
+                formik={formik}
+                formikKey="newPassword"
+                label="Senha nova"
+                isRequired
+                autoComplete="new-password"
+                variant="outlined"
+              ></PasswordInput>
+            </Unstable_Grid2>
+            <Unstable_Grid2 xs={12}>
+              <PasswordInput
+                formik={formik}
+                formikKey="confirmNewPassword"
+                label="Digite novamente a nova senha"
+                isRequired
+                autoComplete="new-password"
+                variant="outlined"
+              ></PasswordInput>
+            </Unstable_Grid2>
+          </Unstable_Grid2>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="inherit" disabled={formLoading}>
+            Cancelar
+          </Button>
+          <LoadingButton
+            loading={formLoading}
+            type="submit"
+            variant="contained"
+            color="success"
+          >
+            Alterar senha
+          </LoadingButton>
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 }
