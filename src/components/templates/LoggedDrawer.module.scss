@@ -1,0 +1,33 @@
+$drawerWidth: 280px;
+
+.drawerPaper {
+    width: $drawerWidth;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.drawer-wrapper {
+
+    .drawer {
+        width: $drawerWidth;
+        position: relative;
+        width: 0px;
+        transition: all 225ms ease;
+        z-index: 20;
+    }
+
+    &.drawer-open {
+        .drawer {
+            width: $drawerWidth;
+        }
+    }
+}
+.acordion{
+    transition: all 250ms ease;
+}
+.acordion-open{
+    margin: 10px;
+    border: 1px solid var(--open-border-color);
+    border-radius: 10px;
+    overflow: hidden;
+}

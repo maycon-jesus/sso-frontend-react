@@ -1,0 +1,12 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+
+    .card{
+        width: 450px;
+        margin: 15px;
+    }
+}

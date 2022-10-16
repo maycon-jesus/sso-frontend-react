@@ -1,52 +1,43 @@
-import {
-  Button,
-  Input,
-  InputGroup,
-  InputRightElement,
-  useColorMode,
-} from "@chakra-ui/react";
+import { mdiEyeOff } from "@mdi/js";
+import { IconButton, InputAdornment, SvgIcon, Tooltip } from "@mui/material";
+import { useFormik } from "formik";
 import { ChangeEventHandler, FocusEventHandler, useState } from "react";
-
+import { TextInput } from "./TextInput";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 interface Props {
-  onChange?: ChangeEventHandler<HTMLInputElement>;
-  onBlur?: FocusEventHandler<HTMLInputElement>;
-  value?: string;
+  formik: ReturnType<typeof useFormik<any>>;
+  formikKey: string;
+  label?: string;
   autoComplete?: string;
-  name?: string;
+  placeHolder?: string;
+  isRequired?: boolean;
+  variant?: "standard" | "outlined" | "filled";
 }
 
 export function PasswordInput(props: Props) {
   const [show, setShow] = useState(false);
-  const { colorMode } = useColorMode();
 
   const handleClick = () => {
     setShow(!show);
   };
 
   return (
-    <InputGroup>
-      <Input
-        pr="6rem"
-        type={show ? "text" : "password"}
-        placeholder="Senha"
-        variant="filled"
-        name={props.name}
-        onChange={props.onChange}
-        onBlur={props.onBlur}
-        value={props.value || ""}
-        autoComplete={props.autoComplete}
-      />
-      <InputRightElement width="6rem">
-        <Button
-          h="1.75rem"
-          variant="solid"
-          colorScheme={colorMode === "light" ? "whiteAlpha" : "blackAlpha"}
-          size="sm"
-          onClick={handleClick}
-        >
-          {show ? "Ocultar" : "Mostrar"}
-        </Button>
-      </InputRightElement>
-    </InputGroup>
+    <TextInput
+      {...props}
+      type={show ? "text" : "password"}
+      // slot_inputRightElement={
+      //   <InputAdornment position="end">
+      //     <Tooltip title={show ? "Ocultar senha" : "Mostrar senha"} arrow>
+      //       <IconButton
+      //         aria-label="toggle password visibility"
+      //         onClick={handleClick}
+      //       >
+      //         {show ? <VisibilityOffIcon /> : <VisibilityIcon />}
+      //       </IconButton>
+      //     </Tooltip>
+      //   </InputAdornment>
+      // }
+    ></TextInput>
   );
 }
