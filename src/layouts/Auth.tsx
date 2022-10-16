@@ -10,9 +10,25 @@ interface Props {
 export function AuthLayout(props: Props): JSX.Element {
   const router = useRouter();
   const logged = useRecoilValue(useAuthLoggedState);
-  console.log("layout render");
-  if (!logged.loading && logged.logged) {
-    router.push("/minha-conta");
+  if (
+    ["/", "/registrar"].includes(router.pathname) &&
+    !logged.loading &&
+    logged.logged
+  ) {
+    router.push((router.query.redirectUrl as string) || "/minha-conta");
+  }
+
+  if (
+    ["/oauth2"].includes(router.pathname) &&
+    !logged.loading &&
+    !logged.logged
+  ) {
+    router.push({
+      pathname: "/",
+      query: {
+        redirectUrl: router.asPath,
+      },
+    });
   }
 
   return (
