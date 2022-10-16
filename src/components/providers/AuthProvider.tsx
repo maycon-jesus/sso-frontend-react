@@ -30,6 +30,11 @@ export function AuthProvider() {
         .catch(() => {
           doLogout();
         });
+    } else {
+      setLogged({
+        logged: false,
+        loading: false,
+      });
     }
 
     if (tokenState) {
