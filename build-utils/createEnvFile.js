@@ -8,3 +8,4 @@ const envText = Object.entries(process.env)
 .join('\n')
 
 fs.writeFileSync(path.join(__dirname,'../.env'), envText)
+console.log(envText)
