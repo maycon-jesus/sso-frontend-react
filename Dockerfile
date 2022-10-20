@@ -11,4 +11,4 @@ RUN ["npm", "install"]
 RUN ["npm", "run", "build"]
 
 
-ENTRYPOINT [ "npm","start" ]
+ENTRYPOINT [ "node",".next/standalone/server.js" ]
