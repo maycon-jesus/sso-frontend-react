@@ -1,46 +1,44 @@
-import { setApiToken } from "libs/api";
 import { useGetAuthUserData } from "states/hooks/auth/useGetAuthUserData";
 import cookie from "js-cookie";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { useAuthLoggedState, useAuthTokenState } from "states/Auth";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  useAuthLoggedLoadingState,
+  useAuthLoggedState,
+  useAuthUserDataState,
+} from "states/Auth";
 import { useEffect, useLayoutEffect } from "react";
 import { useAuthLogout } from "states/hooks/auth/useAuthLogout";
 
 export function AuthProvider() {
-  const tokenState = useRecoilValue(useAuthTokenState);
   const getAuthUserData = useGetAuthUserData();
   const doLogout = useAuthLogout();
-  const setLogged = useSetRecoilState(useAuthLoggedState);
-  const token = tokenState || cookie.get("AUTH_TOKEN");
+  const [logged, setLogged] = useRecoilState(useAuthLoggedState);
+  const [loadingLogged, setLoadingLogged] = useRecoilState(
+    useAuthLoggedLoadingState
+  );
+  const token = cookie.get("AUTH_TOKEN");
 
-  useEffect(() => {
-    if (token) {
-      setLogged({
-        loading: true,
-        logged: false,
-      });
-      setApiToken(token);
+  useLayoutEffect(() => {
+    const token = cookie.get("AUTH_TOKEN");
+    if (token && logged === true) {
+      setLoadingLogged(true);
+
       getAuthUserData()
         .then(() => {
-          setLogged({
-            logged: true,
-            loading: false,
-          });
+          setLoadingLogged(false);
         })
         .catch(() => {
+          setLoadingLogged(false);
           doLogout();
         });
-    } else {
-      setLogged({
-        logged: false,
-        loading: false,
-      });
+    } else if (!token) {
+      setLoadingLogged(false);
     }
+  }, [logged]);
 
-    if (tokenState) {
-      cookie.set("AUTH_TOKEN", tokenState);
-    }
-  }, [tokenState]);
+  useLayoutEffect(() => {
+    setLogged(true);
+  }, []);
 
   return <></>;
 }

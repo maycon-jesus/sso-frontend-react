@@ -3,8 +3,6 @@ import { $api } from "libs/api";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useSetRecoilState } from "recoil";
-import { useAuthTokenState } from "states/Auth";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -19,6 +17,9 @@ import {
 } from "@mui/material";
 import { TextInput } from "components/form/TextInput";
 import { toast } from "react-toastify";
+import cookies from "js-cookie";
+import { useAuthLoggedState } from "states/Auth";
+import { useSetRecoilState } from "recoil";
 
 interface Props {
   className?: string;
@@ -28,10 +29,10 @@ export function CardLogin(props: Props) {
   // Hooks
   const router = useRouter();
   const theme = useTheme();
+  const setLogged = useSetRecoilState(useAuthLoggedState);
 
   // Form
   const [loading, setLoading] = useState(false);
-  const setToken = useSetRecoilState(useAuthTokenState);
 
   const formik = useFormik({
     initialValues: {
@@ -57,8 +58,10 @@ export function CardLogin(props: Props) {
         token: string;
       }>("/auth/login", data)
       .then((res) => {
-        setToken(res.data.token);
+        cookies.set("AUTH_TOKEN", res.data.token);
         toast.success("Login feito com sucesso!");
+        setLogged(true);
+        router.push(router.query.redirectPath?.toString() || "/minha-conta");
       })
       .catch((err) => {
         toast.error(`[ERRO] ${err.response?.data?.message || err.message}`);

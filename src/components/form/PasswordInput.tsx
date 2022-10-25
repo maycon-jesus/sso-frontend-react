@@ -26,18 +26,18 @@ export function PasswordInput(props: Props) {
     <TextInput
       {...props}
       type={show ? "text" : "password"}
-      // slot_inputRightElement={
-      //   <InputAdornment position="end">
-      //     <Tooltip title={show ? "Ocultar senha" : "Mostrar senha"} arrow>
-      //       <IconButton
-      //         aria-label="toggle password visibility"
-      //         onClick={handleClick}
-      //       >
-      //         {show ? <VisibilityOffIcon /> : <VisibilityIcon />}
-      //       </IconButton>
-      //     </Tooltip>
-      //   </InputAdornment>
-      // }
+      slot_inputRightElement={
+        <InputAdornment position="end">
+          <Tooltip title={show ? "Ocultar senha" : "Mostrar senha"} arrow>
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={handleClick}
+            >
+              {show ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            </IconButton>
+          </Tooltip>
+        </InputAdornment>
+      }
     ></TextInput>
   );
 }

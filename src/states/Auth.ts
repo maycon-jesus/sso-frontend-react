@@ -11,18 +11,12 @@ export const useAuthUserDataState = atom<null | {
     default: null
 })
 
-export const useAuthLoggedState = atom<{
-    logged: boolean,
-    loading: boolean
-}>({
+export const useAuthLoggedState = atom<boolean>({
     key:'AuthLogged',
-    default: {
-        logged: false,
-        loading: true
-    }
+    default: false
 })
 
-export const useAuthTokenState = atom<string|null>({
-    key:'AuthToken',
-    default:null
+export const useAuthLoggedLoadingState = atom<boolean>({
+    key:'AuthLoggedLoading',
+    default: false
 })
